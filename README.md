@@ -174,3 +174,13 @@ If you use PersonaPlex in your research, please cite our paper:
       url={https://arxiv.org/abs/2602.06053}, 
 }
 ```
+
+## Local Docker override (localhost-only, plain HTTP)
+
+`docker-compose.local.yaml` overrides `docker-compose.yaml` to bind the port to `127.0.0.1`, drop `--ssl`, pick one GPU (`GPU`, default 0) and choose the weights cache (`MODEL_CACHE`, default `./.cache/huggingface`):
+
+```bash
+echo "HF_TOKEN=hf_xxx" > .env
+docker compose -f docker-compose.yaml -f docker-compose.local.yaml up -d --build
+ssh -L 8998:localhost:8998 <host>   # open http://localhost:8998 (localhost is a secure context, so the mic works)
+```
